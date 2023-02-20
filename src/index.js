@@ -1,4 +1,4 @@
-const MORSE_TABLE = {
+  const MORSE_TABLE = {
     '.-':     'a',
     '-...':   'b',
     '-.-.':   'c',
@@ -35,12 +35,46 @@ const MORSE_TABLE = {
     '---..':  '8',
     '----.':  '9',
     '-----':  '0',
-};
+  }
 
 function decode(expr) {
-    // write your solution here
+  let code = []
+  let decodeSplit =  expr.match(/.{2}/g);
+  decodeSplit.forEach(el => {
+    switch (el) {
+      case '00': code.push('*')
+        break
+      case '10': code.push('.')
+        break
+
+      case '11': code.push('-')
+        break
+
+      case '**': code.push('*')
+        break
+    }
+  })
+
+  let morseList = []
+  let morseSplit = code.join('').match(/.{5}/g)
+  morseSplit.forEach(el => {
+    if (el === '*****') {
+      el = ' '
+    } else {
+      el = el.match(/[^*]/g).join('')
+    }
+
+    morseList.push(el)
+  })
+
+  return morseList.map(el => MORSE_TABLE[el] || ' ').join('')
 }
 
+// 00 - '*'
+// 10 - '.'
+// 11 - '-'
+// ** - '*'
+
 module.exports = {
-    decode
+  decode
 }
